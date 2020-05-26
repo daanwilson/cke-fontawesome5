@@ -24,4 +24,6 @@ If you like the plugin, please by me a beer ;)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UB5R3E9XWVWDQ)
 
+![Preview](https://ckeditor.com/cke4/sites/default/files/styles/screenshot/public/fontawesome5/Screenshot_1_0.png)
+
 
