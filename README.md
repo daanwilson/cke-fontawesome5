@@ -13,11 +13,11 @@ Thats it.
 
 Example:
 
-config.toolbar = [['Source', '-', 'NewPage', '-', 'Templates','fontawesome5']];
-config.extraPlugins = 'fontawesome5';
-config.fontawesomePath = '/path/to/your/font-awesome-5/all.css'
-CKEDITOR.replace(editorname, config);
-CKEDITOR.dtd.$removeEmpty['span'] = false;
+config.toolbar = [['Source', '-', 'NewPage', '-', 'Templates','fontawesome5']]; 
+config.extraPlugins = 'fontawesome5'; 
+config.fontawesomePath = '/path/to/your/font-awesome-5/all.css' 
+CKEDITOR.replace(editorname, config); 
+CKEDITOR.dtd.$removeEmpty['span'] = false; 
 
 Please let me know when something is not working.
 If you like the plugin, please by me a beer ;)
