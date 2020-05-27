@@ -42,8 +42,7 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
 	var searchTimer = null;
 
     function faIcons(icons) {
-        var result = '';
-		
+        var result = [];
         for (var x in icons) {
             var icon = icons[x];
 			var styleSelected = style;
@@ -52,25 +51,32 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
 					var found = true;
 					if(search!=''){
 						found = false;
-						var searchstring = icon.label+','+icon.search.join(",");
+						var searchstring = icon.label.toLowerCase()+','+icon.search.join(",");
 						if(searchstring.indexOf(search)>=0){
 							found=true;
 						}
 						
 					}
 					if(found){
-						result += '<a href="#" onclick="klick(this);return false;" title="' + icon.label + '('+style+')"><span class="fa' + style.substr(0,1) + ' fa-' + x + '"></span>' + icon.label + '</a>';
+						result.push('<a href="#" onclick="klick(this);return false;" title="' + icon.label + '('+style+')"><span class="fa' + style.substr(0,1) + ' fa-' + x + '"></span><div class="icon-label">' + icon.label + '</div></a>');
 					}
 				}
 			});
-        }
+        }		
         return result;
     }
 	function setStyle(s){
+		var btns = document.getElementsByClassName('btnStyles');		
+		for(i=0;i<btns.length;i++){
+			btns[i].className = btns[i].className.replace(' active', '').replace('active', '');
+		}
+				
 		if(s==style){
 			style = '';
 		}else{
 			style = s;
+			var c = 'btnStyle'+s.charAt(0).toUpperCase() + s.slice(1);
+			document.getElementsByClassName(c)[0].className+=' active';	
 		}
 	}
 
@@ -79,10 +85,14 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
     }
 
     function loadIcons(icons) {
-        var div = document.createElement('div');
-        div.innerHTML = icons.trim();
-        var count = div.getElementsByTagName('a').length;
-        return '<div style="color:#bcbcbc;">' + count + ' icons</div>' + icons;
+		var html = '<div style="color:#bcbcbc;">' + icons.length + ' icons</div>';
+		if(icons.length>500){
+			var count = icons.length;
+			icons = icons.slice(0,500);
+			icons.push('<a href="#" onclick="return false;" title="Use search or filter to find your icon in iconset of '+count+' icons."><span class="fas fa-angle-double-right more-icons"></span><div class="icon-label">use search</div></a>')
+		}
+
+        return html + icons.join('');
     }
 
     return {
@@ -106,6 +116,9 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
                             onKeyUp: function (e) {
                                 //searchIcon(e.sender.$.value);
 								search = e.sender.$.value;
+								if(search.length>0){
+									search = search.toLowerCase();
+								}
 								if(searchTimer){
 									clearTimeout(searchTimer);
 								}
@@ -122,35 +135,35 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
                     children: [
 
                         {
-                            type: 'button', label: 'Regular',
+                            type: 'button', label: 'Regular',className:'btnStyles btnStyleRegular',
                             onClick: function () {
 								setStyle('regular');
                                 showIcons(faIcons(icons));
                             }
                         },
                         {
-                            type: 'button', label: 'Solid',
+                            type: 'button', label: 'Solid',className:'btnStyles btnStyleSolid',
                             onClick: function () {
 								setStyle('solid');
                                 showIcons(faIcons(icons));
                             }
                         },
 						{
-                            type: 'button', label: 'Light',
+                            type: 'button', label: 'Light',className:'btnStyles btnStyleLight',
                             onClick: function () {
 								setStyle('light');
                                 showIcons(faIcons(icons));
                             }
                         },
                         {
-                            type: 'button', label: 'Brands',
+                            type: 'button', label: 'Brands',className:'btnStyles btnStyleBrands',
                             onClick: function () {
 								setStyle('brands');
                                 showIcons(faIcons(icons));
                             }
                         },
 						{
-                            type: 'button', label: 'Duotone',
+                            type: 'button', label: 'Duotone',className:'btnStyles btnStyleDuotone',
                             onClick: function () {
 								setStyle('duotone');
                                 showIcons(faIcons(icons));
@@ -265,7 +278,7 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
             if (dialog.getValueOf('font-awesome', 'colorChooser') != '')
                 style += 'color:' + dialog.getValueOf('font-awesome', 'colorChooser') + ';';
             if (dialog.getValueOf('font-awesome', 'size') != '')
-                style += 'font-size:' + dialog.getValueOf('font-awesome', 'size') + 'px';
+                style += 'font-size:' + dialog.getValueOf('font-awesome', 'size').replace('px','') + 'px';
             if (style) icon.setAttribute('style', style);
             icon.setAttribute('aria-hidden', 'true');
             editor.insertElement(icon);
