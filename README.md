@@ -12,11 +12,11 @@ Installation:
 Thats it.
 
 ## Options:
-'path':'path-to-you-all.css-file',
-'version': '', (default: 5.13.0)
-'edition': 'free|pro' (default: pro)
-'element': '', (default span)
-
+'path':'path-to-you-all.css-file', 
+'version': '', (default: 5.13.0) 
+'edition': 'free|pro' (default: pro) 
+'element': '', (default span) 
+ 
 Example:
 
 config.toolbar = [['Source', '-', 'NewPage', '-', 'Templates','fontawesome5']]; 
