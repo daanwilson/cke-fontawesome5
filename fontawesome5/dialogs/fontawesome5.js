@@ -41,9 +41,16 @@ CKEDITOR.dialog.add('ckeditorFaDialog', function (editor) {
 	var search = '';
 	var searchTimer = null;
 	var versionCurrent = getVersionCalculation(editor.config.fontawesome.version);
+	
 	function getVersionCalculation(version){
 		var versionCalc = version.split('.');
-		return (parseInt(versionCalc[0])*10000)+(parseInt(versionCalc[1])*100)+parseInt(versionCalc[2]);
+		var result = 0;
+		var multiplier = 10000;
+		versionCalc.forEach(function(nr){
+			result = result + (parseInt(nr) * multiplier);
+			multiplier = multiplier/100;
+		});
+		return result;
 	}
 
     function faIcons(icons) {
